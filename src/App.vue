@@ -1,29 +1,56 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+
+    <!-- 头部 -->
+    <app-header :poiInfo='goods.poi_info'></app-header>
+
+    <!-- 导航 -->
+    <Nav></Nav>
+
+    <!-- 内容 -->
+    <Contemt></Contemt>
+
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
+import Header from './views/header/Header';
+import Nav from './views/nav/Nav';
+import Contemt from './views/contemt/Contemt';
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  export default {
+    name: 'app',
+    data() {
+      return {
+        goods: {},
+      };
+    },
+    components: {
+      "app-header": Header,
+      Nav,
+      Contemt
+    },
+    methods: {
+      async fetchGoods(){
+        fetch('/api/goods')
+          .then(resp => {
+            return resp.json();
+          })
+          .then(res => {
+            this.goods = res.data;
+          })
+          .catch(err => {
+            console.log('出错了' + err)
+          })
+      }
+    },
+    created(){
+      this.fetchGoods();
+    }
+  }
+</script>
+
+<style>
 
 #nav a.router-link-exact-active {
   color: #42b983;

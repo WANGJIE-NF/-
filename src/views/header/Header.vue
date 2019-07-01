@@ -1,0 +1,345 @@
+<template>
+  <div class="header">
+    <div class="header-background" :style="headPicUrl">
+      <!-- 顶部通栏开始 -->
+      <div class="top">
+        <span class="back-ico icon-arrow_lift"></span>
+        <form >
+          <span class="search-ico"></span>
+          <input type="text" placeholder="搜索店内商品">
+        </form>
+        <span class="spelling-ico">拼单</span>
+        <div class="more-ico">
+          <span class="s-radius"></span>
+          <span class="s-radius"></span>
+          <span class="s-radius"></span>
+        </div>
+      </div>
+      <!-- 顶部通栏结束 -->
+
+      <!-- 店铺开始 -->
+      <div class="middle">
+        <div class='logo-ico' :style="picUrl"></div>
+        <div class="name">{{poiInfo.name}}</div>
+        <div class='collect'>
+          <img src="./img/star.png" alt="" srcset="">
+          <span>收藏</span>
+        </div>
+      </div>
+      <!-- 店铺结束 -->
+
+      <!-- 公告 -->
+      <div class="bulletin" v-if="poiInfo.discounts2">
+        <span class="discount-ico" :style="iconUrl"></span>
+        <span class="discount-text">{{poiInfo.discounts2[0].info}}</span>
+        <span class="number-text">共{{poiInfo.discounts2.length}}个活动</span>
+        <span class="icon-keyboard_arrow_right" v-on:click="onShowBulletin"></span>
+      </div>
+      <!-- 公告结束 -->
+    </div>
+    <!-- 店铺活动开始 -->
+    <div class="showBulletin" v-if="bulletin">
+        <div class="mask"></div>
+        <div class="bulletin-background" :style="poiBackPicUrl">
+          <img class="logo-img" :src="poiInfo.pic_url" alt="" srcset="">
+          <p class="bulletin-name">{{poiInfo.name}}</p>
+          <!-- <Score></Score> -->
+          <p class="delivery">
+            <span>{{poiInfo.shipping_fee_tip}}</span>
+            <span class="separator">|</span>
+            <span>{{poiInfo.min_price_tip}}</span>
+            <span class="separator">|</span>
+            <span>{{poiInfo.delivery_time_tip}}</span>
+          </p>
+          <p class="deliveryTime">配送时间：{{poiInfo.shipping_time}}</p>
+          <hr/>
+          <div class="discount"  v-for="(discount,index) in poiInfo.discounts2" :key="index">
+            <img class="discount-img" :src="discount.icon_url" alt="">
+            <span class="discount-text">{{discount.info}}</span>
+          </div>
+        </div>
+        <div class="icon-close" v-on:click="onShowBulletin"></div>
+      </div>
+      <!-- 店铺活动结束 -->
+  </div>
+</template>
+
+<script>
+export default {
+  // name: 'header',
+  data(){
+    return {
+      bulletin: false,
+    }
+  },
+  props: {
+    poiInfo: {
+      type: Object,
+      default(){
+        return {}
+      }
+    }
+  },
+  methods: {
+    onShowBulletin(){
+      this.bulletin = !this.bulletin;
+    }
+  },
+  computed: {
+    headPicUrl(){
+      return `background-image:url(${this.poiInfo.head_pic_url})`
+    },
+    picUrl(){
+      return `background-image:url(${this.poiInfo.pic_url})`
+    },
+    iconUrl(){
+      return `background-image:url(${this.poiInfo.discounts2[0].icon_url})`
+    },
+    poiBackPicUrl(){
+      return `background-image:url(${this.poiInfo.poi_back_pic_url})`
+    },
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+@import url("../../common/css/icon.css");
+
+.header{
+  width: 100%;
+  height: 130px;
+}
+
+/* 顶部通栏开始  */
+.header-background{
+  width: 100%;
+  height: 110px;
+  padding-top: 20px;
+  background-size: 100% 130px;
+}
+.top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.back-ico{
+  flex-shrink: 0;
+  margin-left: 5px;
+  color: #fff;
+}
+form{
+  flex-grow: 1;
+  position: relative;
+  margin: 0 20px;
+  height:20px;
+}
+.search-ico{
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 15px;
+  height: 15px;
+  background-image: url('./img/search.png');
+  background-size: 100% 100%;
+}
+input{
+  width: 100%;
+  height: 18px;
+  border-radius: 10px;
+  border: none;
+  text-indent: 20px;
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.spelling-ico{
+  flex-shrink: 0;
+  padding:4px;
+  border: 1px solid #ccc;
+  font-size: 12px;
+  color: #fff;
+}
+.more-ico{
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin: 0 5px 0 10px;
+}
+.s-radius{
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 0 1px;
+  border-radius: 3px;
+  background-color: #fff;
+}
+/* 顶部通栏结束 */
+
+/* 店铺开始 */
+.middle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  height: 40px;
+  padding: 8px;
+}
+.logo-ico{
+  flex: 0 0 auto;
+  width: 50px;
+  height: 40px;
+  border-radius: 4px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.name{
+  flex: 1 1 auto;
+  margin-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  color: #fff;
+}
+.collect{
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+.collect img{
+  width: 15px;
+  height: 15px;
+}
+.collect span{
+  margin-top: 3px;
+  font-size: 12px;
+  color: #fff;
+}
+/* 店铺结束 */
+
+
+/* 公告开始 */
+.bulletin{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  padding: 5px;
+}
+.discount-ico{
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  background-size: 100%;
+} 
+.discount-text{
+  flex: 1 1 auto;
+  margin: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+.number-text{
+  flex: 0 0 auto;
+  margin: 0 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.icon-keyboard_arrow_right{
+  flex: 0 0 auto;
+}
+/* 公告结束 */
+
+/* 店铺活动开始 */
+.showBulletin{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vW;
+  height: 100vH;
+  z-index: 100;
+}
+.mask{
+  width: 100%;
+  height: 100%;
+  background-color: #999;
+  opacity: 0.5;
+}
+.bulletin-background{
+  position:absolute;
+  left: 10%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  padding-top: 20px;
+  margin: 15px auto;
+  border-radius: 10px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.logo-img{
+  width: 50px;
+  border-radius: 5px;
+}
+.bulletin-name{
+  padding: 5px;
+  font-size: 12px;
+}
+.delivery{
+  padding: 5px;
+  font-size: 10px;
+}
+.separator{
+  margin: 0 5px;
+}
+.deliveryTime{
+  padding: 5px;
+  font-size: 10px;
+}
+hr{
+  width: 90%;
+  border :none;
+  border-bottom: 1px solid black;
+}
+.discount{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.discount-img{
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+}
+.discount-text{
+  flex: 0 1 auto;
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.icon-close{
+  position: absolute;
+  left: 50%;
+  top: 90%;
+  margin-left: -8px;
+}
+/* 店铺活动结束 */
+
+
+
+</style>
