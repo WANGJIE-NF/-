@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <router-link to="./goods">商品</router-link>
+    <router-link to="./foods">商品</router-link>
     <router-link to="./evaluate">评价</router-link>
     <router-link to="./seller">卖家信息</router-link>
   </div>
@@ -18,6 +18,7 @@ export default {
 .nav{
   display: flex;
   justify-content: space-around;
+  height: 40px; 
   border-bottom: 1px solid #ddd;
 }
 a{

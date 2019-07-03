@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Goods from './views/goods/Goods.vue';
+import Foods from './views/foods/Foods.vue';
 import Evaluate from './views/evaluate/Evaluate.vue';
 import Seller from './views/seller/Seller.vue';
 
@@ -8,8 +8,8 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {path: "*", redirect: '/goods'},
-    {path: '/goods', name: 'goodsLink', component: Goods},
+    {path: "*", redirect: '/foods'},
+    {path: '/foods', name: 'foodsLink', component: Foods},
     {path: '/evaluate', name: 'evaluateLink', component: Evaluate},
     {path: '/seller', name: 'sellerLink', component: Seller},
     // {

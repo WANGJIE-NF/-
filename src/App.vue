@@ -2,7 +2,7 @@
   <div id="app">
 
     <!-- 头部 -->
-    <app-header :poiInfo='goods.poi_info'></app-header>
+    <app-header :poiInfo='poiInfo'></app-header>
 
     <!-- 导航 -->
     <Nav></Nav>
@@ -22,7 +22,7 @@ import Contemt from './views/contemt/Contemt';
     name: 'app',
     data() {
       return {
-        goods: {},
+        poiInfo: {},
       };
     },
     components: {
@@ -31,13 +31,13 @@ import Contemt from './views/contemt/Contemt';
       Contemt
     },
     methods: {
-      async fetchGoods(){
+      fetchpoiInfo(){
         fetch('/api/goods')
           .then(resp => {
             return resp.json();
           })
           .then(res => {
-            this.goods = res.data;
+            this.poiInfo = res.data.poi_info;
           })
           .catch(err => {
             console.log('出错了' + err)
@@ -45,7 +45,7 @@ import Contemt from './views/contemt/Contemt';
       }
     },
     created(){
-      this.fetchGoods();
+      this.fetchpoiInfo();
     }
   }
 </script>
