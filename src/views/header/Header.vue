@@ -43,7 +43,7 @@
         <div class="bulletin-background" :style="poiBackPicUrl">
           <img class="logo-img" :src="poiInfo.pic_url" alt="" srcset="">
           <p class="bulletin-name">{{poiInfo.name}}</p>
-          <!-- <Score></Score> -->
+          <Star :score='poiInfo.wm_poi_score'></Star>
           <p class="delivery">
             <span>{{poiInfo.shipping_fee_tip}}</span>
             <span class="separator">|</span>
@@ -65,12 +65,16 @@
 </template>
 
 <script>
+import Star from '../../components/star/Star'
 export default {
   // name: 'header',
   data(){
     return {
       bulletin: false,
     }
+  },
+  components: {
+    Star
   },
   props: {
     poiInfo: {
@@ -294,19 +298,19 @@ input{
   border-radius: 5px;
 }
 .bulletin-name{
-  padding: 5px;
+  padding: 5px 0;
   font-size: 12px;
 }
 .delivery{
-  padding: 5px;
-  font-size: 10px;
+  padding: 5px 0;
+  font-size: 12px;
 }
 .separator{
   margin: 0 5px;
 }
 .deliveryTime{
-  padding: 5px;
-  font-size: 10px;
+  padding: 5px 0;
+  font-size: 12px;
 }
 hr{
   width: 90%;
