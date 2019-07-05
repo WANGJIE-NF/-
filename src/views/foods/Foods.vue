@@ -1,82 +1,103 @@
 <template>
   <div class="foods">
-    <!-- 商品分类 -->
-    <div class="foods-sort" ref="foodsSort">
-      <ul>
+    <div class="foods-wrap">
+      <!-- 商品分类 -->
+      <div class="foods-sort" ref="foodsSort">
+        <ul>
 
-        <!-- 专场 -->
-        <li class='foods-sort-item' :class="{active:currentIndex==0}" v-on:touchstart  ="onFoodsSortItem(0)">
-          <img v-if="container.tag_icon" :src="container.tag_icon">
-          <span>{{container.tag_name}}</span>
-        </li>
+          <!-- 专场 -->
+          <li class='foods-sort-item foods-sort-hook' :class="{active:nowIndex==0}" v-on:touchstart  ="onFoodsSortItem(0)">
+            <img v-if="container.tag_icon" :src="container.tag_icon">
+            <span>{{container.tag_name}}</span>
+          </li>
 
-        <li class="foods-sort-item" :class="{active:currentIndex==index+1}" v-on:touchstart="onFoodsSortItem(index+1)" v-for='(food,index) in foods' :key="index" >
-          <img v-if="food.icon" :src="food.icon">
-          <span>{{food.name}}</span>
-        </li>
+          <li class="foods-sort-item foods-sort-hook" :class="{active:nowIndex==index+1}" v-on:touchstart="onFoodsSortItem(index+1)" v-for='(food,index) in foods' :key="index" >
+            <img v-if="food.icon" :src="food.icon">
+            <span>{{food.name}}</span>
+          </li>
+        
+        </ul>
+      </div>
 
-      </ul>
-    </div>
-    <!-- 商品列表  -->
-    <div class="foods-list" ref="foodsList">
-      <ul>
+      <!-- 商品列表  -->
+      <div class="foods-list" ref="foodsList">
+        <ul>
 
-        <!-- 专场 -->
-        <li class="foods-list-item-special foods-list-hook">
-          <div class="special-wra" v-for="(item,index) in container.operation_source_list" :key="index">
-            <img :src="item.pic_url" alt="">
-          </div>
-        </li>
+          <!-- 专场 -->
+          <li class="foods-list-item-special foods-list-hook">
+            <div class="special-wra" v-for="(item,index) in container.operation_source_list" :key="index">
+              <img :src="item.pic_url" alt="">
+            </div>
+          </li>
 
-        <li  class="foods-list-item foods-list-hook" v-for="(food,index) in foods" :key="index"> 
-          <div class="sort-wra">
-            <h3 class="food-name">
-              <span class="food-name-icon"></span>
-              <span>{{food.name}}</span>
-              </h3>
-            <div class="spus" v-for="(spus,ind) in food.spus" :key="ind">
-              <img class="spus-pic" :src="spus.picture" alt="">
-              <div class="spus-text">
-                <h2 class="spus-name">{{spus.name}}</h2>
-                <p class="spus-description" v-if="spus.description">{{spus.description}}</p>
-                <p class="saled-and-praise">
-                  <span>{{spus.month_saled_content}}</span>
-                  <span>{{spus.praise_content}}</span>
-                </p>
-                <img v-if="spus.product_label_picture" class="label-picture" :src="spus.product_label_picture">
-                <p class="price">
-                  <span class="color-red">￥{{spus.min_price}}</span>
-                  <span>/{{spus.unit}}</span>
-                </p>
+          <li  class="foods-list-item foods-list-hook" v-for="(food,index) in foods" :key="index"> 
+            <div class="sort-wra">
+              <h3 class="food-name">
+                <span class="food-name-icon"></span>
+                <span>{{food.name}}</span>
+                </h3>
+              <div class="spus" v-for="(spus,ind) in food.spus" :key="ind">
+                <img class="spus-pic" :src="spus.picture" alt="">
+                <div class="spus-text">
+                  <h2 class="spus-name">{{spus.name}}</h2>
+                  <p class="spus-description" v-if="spus.description">{{spus.description}}</p>
+                  <p class="saled-and-praise">
+                    <span>{{spus.month_saled_content}}</span>
+                    <span>{{spus.praise_content}}</span>
+                  </p>
+                  <img v-if="spus.product_label_picture" class="label-picture" :src="spus.product_label_picture">
+                  <p class="price">
+                    <span class="color-red">￥{{spus.min_price}}</span>
+                    <span>/{{spus.unit}}</span>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <!-- 购物车 -->
+    <ShopCart></ShopCart>
   </div>
 </template>
 
 <script>
 import Bscroll from "better-scroll"
-import { Domain } from 'domain';
+import ShopCart from "../../components/shopCart/ShopCart"
 
 export default {
   name: 'foods',
   data(){
     return {
-      container : {},
-      foods : [],
+      container : {}, // 专场数据
+      foods : [],     // 商品数据
       sortScroll: {}, // 分类列表滚动对象
-      listScroll: {}, // 食物列表滚动对象
-      eleHeight: [],  // 食物列表高度区间
-      listScrollY: 0, // 食物列表当前高度
+      listScroll: {}, // 商品列表滚动对象
+      eleSort: [],    // 分类列表
+      eleHeight: [],  // 商品列表高度区间
+      listScrollY: 0, // 商品列表当前高度
+      computeNowIndex: true, // 是否需要计算nowIndex
+      nowIndex: 0,  
+      wait: 500 // 节流
     }
   },
   components: {
-    Bscroll
+    Bscroll,
+    ShopCart,
   },
   methods: {
+
+    // 获取分类列表 和 计算商品列表高度区间
+    computeHeight(){
+      this.eleHeight.push(0)
+      this.eleSort = this.$refs.foodsSort.getElementsByClassName('foods-sort-hook')
+      let eleList = this.$refs.foodsList.getElementsByClassName('foods-list-hook')
+      for(let i = 0; i < eleList.length; i++){
+        this.eleHeight.push(this.eleHeight[i] + eleList[i].clientHeight);
+      }
+    },
 
     // 初始化滚动对象
     initScroll(){
@@ -86,11 +107,27 @@ export default {
     
     // 根据下标与右侧对应
     onFoodsSortItem(index){
+      this.computeNowIndex = false;
+      this.nowIndex = index;
       let ele = this.$refs.foodsList.getElementsByClassName('foods-list-hook')[index]
-      this.listScroll.scrollToElement(ele,300);
+      this.listScroll.scrollToElement(ele, 500);
     },
 
-
+    // 根据下标与左侧对应
+     currentIndex(){ 
+      if(this.computeNowIndex){
+        for(let i = 0; i < this.eleHeight.length; i++) {
+          if(this.listScrollY >= this.eleHeight[i] && this.listScrollY < this.eleHeight[i+1]){
+            console.log(i)
+            this.nowIndex = i
+          }
+        }
+        let ele = this.eleSort[this.nowIndex];
+        console.log(ele)
+        this.sortScroll.scrollToElement(ele, 600, 0, -100)
+      }
+    },
+   
     fetchMenus(){
       fetch('api/goods')
         .then(resp => {
@@ -103,38 +140,46 @@ export default {
           // DOM已经更新后执行
           this.$nextTick(() => {
             this.initScroll();
-            this.calculateHeight;
+            this.computeHeight();
+            this.monitorListScroll;
           })
         })
         .catch(err => {
           console.log('出错了' + err)
         })
-    }
-  },
-  computed: {
-    // 计算食物列表高度区间和监听当前高度
-    calculateHeight(){
-      this.eleHeight.push(0)
-      let eleList = this.$refs.foodsList.getElementsByClassName('foods-list-hook')
-      for(let i = 0; i < eleList.length; i++){
-        this.eleHeight.push(this.eleHeight[i] + eleList[i].clientHeight);
-      }
-      // 监听食物列表当前高度
-      this.listScroll.on("scroll", (pos) => {
-        this.listScrollY = Math.abs(Math.floor(pos.y))
-        this.currentIndex;
-      })
     },
 
-    // 根据下标与左侧对应
-    currentIndex(){ 
-      for(let i = 0; i < this.eleHeight.length; i++) {
-        if(this.listScrollY >= this.eleHeight[i] && this.listScrollY < this.eleHeight[i+1]){
-          return i;
+    // 节流
+    throttle(handler,wait){
+      let lastTime = 0;
+      return function(e){
+        let nowTmie = new Date().getTime();
+        if(nowTmie - lastTime > wait){
+            handler.apply(this,arguments);
+            lastTime = nowTmie;
         }
       }
-      return 0;
-    }
+    },
+   
+   
+  },
+  computed: {
+    
+    // 监听商品列表当前高度
+    monitorListScroll(){
+      let currentInde = this.throttle(this.currentIndex, this.wait);
+      this.listScroll.on("scroll", (pos) => {
+        this.listScrollY = Math.abs(Math.floor(pos.y))
+        currentInde();
+      })
+
+      this.listScroll.on("scrollEnd", (pos) => {
+        this.computeNowIndex = true;
+        this.currentIndex();
+      })
+    },
+    
+
   },
   created(){
     this.fetchMenus();
@@ -147,21 +192,26 @@ export default {
 <style scoped>
 /* 分类列表 */
 .foods{
-  position: absolute;
-  top: 171px;
-  bottom: 51px;
-  display: flex;
   width: 100%;
+  height: 100%;
+}
+
+.foods-wrap{
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 51px;
   overflow: hidden;
 }
+
 .foods-sort{
   flex: 0 0 85px;
-  background: #f5f5f5;
+  background: #f1f2f6;
 }
 
 .foods-sort-item{
   padding: 15px 0 15px 5px;
-  border-bottom: 1px solid #e4e4e4;
 }
 .foods-sort-item img{
   width: 16px;
@@ -175,9 +225,11 @@ export default {
 /* 商品列表 */
 .foods-list{
   flex: 1;
+  background-color: #fff;
 }
 .foods-list-item-special{
   width: 100%;
+  padding-bottom: 10px;
 }
 .special-wra{
   width: 100%;
@@ -190,7 +242,7 @@ export default {
 }
 
 .foods-list-item{
-  padding: 30px 0 0 5px;
+  padding: 10px 0 0 10px;
   border-top: 1px solid #e4e4e4;
 }
 .food-name{
@@ -254,6 +306,6 @@ export default {
   color: red;
 }
 .active{
- background: #dbdbdb
+ background: #fff
 }
 </style>
