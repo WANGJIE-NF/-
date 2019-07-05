@@ -20,10 +20,13 @@ npm run build
 npm run test
 ```
 
-### Lints and fixes files
+### Lints and fixes files ###
 ```
 npm run lint
 ```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### 技术栈
+vue vue-cli3 vue-router express better-scroll  
