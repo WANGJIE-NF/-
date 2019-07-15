@@ -24,8 +24,6 @@ export default {
       let result = [];
       let score = Math.floor(this.score * 2) / 2;
       let on = Math.floor(score);
-      console.log(on.length)
-
       let half = score % 1 !== 0;
       for(let i = 0; i < on; i++){
         result.push(cla_on);

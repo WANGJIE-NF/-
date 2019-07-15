@@ -30,9 +30,9 @@
 
       <!-- 公告 -->
       <div class="bulletin" v-if="poiInfo.discounts2">
-        <span class="discount-ico" :style="iconUrl"></span>
-        <span class="discount-text">{{poiInfo.discounts2[0].info}}</span>
-        <span class="number-text">共{{poiInfo.discounts2.length}}个活动</span>
+        <span class="bulletin-discount-ico" :style="iconUrl"></span>
+        <span class="bulletin-discount-text">{{poiInfo.discounts2[0].info}}</span>
+        <span class="bulletin-number-text">共{{poiInfo.discounts2.length}}个活动</span>
         <span class="icon-keyboard_arrow_right" v-on:click="onShowBulletin"></span>
       </div>
       <!-- 公告结束 -->
@@ -231,26 +231,26 @@ input{
 /* 公告开始 */
 .bulletin{
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   color: #fff;
   padding: 5px;
 }
-.discount-ico{
+.bulletin-discount-ico{
   flex: 0 0 auto;
   width: 20px;
   height: 20px;
   background-size: 100%;
 } 
-.discount-text{
+.bulletin-discount-text{
   flex: 1 1 auto;
   margin: 0 5px;
-  white-space: nowrap;
-  overflow: hidden;
+  white-space: nowrap; 
+  overflow: hidden;      
   text-overflow: ellipsis;
   font-size: 12px;
 }
-.number-text{
+.bulletin-number-text{
   flex: 0 0 auto;
   margin: 0 5px;
   font-size: 12px;
@@ -259,7 +259,7 @@ input{
   text-overflow: ellipsis;
 }
 .icon-keyboard_arrow_right{
-  flex: 0 0 auto;
+  flex: 0 0 20px;
 }
 /* 公告结束 */
 
@@ -281,14 +281,14 @@ input{
 .bulletin-background{
   position:absolute;
   left: 10%;
-  top: 0;
+  top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
   width: 80%;
   height: 80%;
-  padding-top: 20px;
-  margin: 15px auto;
+  padding: 20px 10px;
   border-radius: 10px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -321,26 +321,39 @@ hr{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: center;
 }
 .discount-img{
   flex: 0 0 auto;
   width: 20px;
   height: 20px;
   border-radius: 2px;
+  margin-right: 5px;
 }
 .discount-text{
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   font-size: 10px;
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .icon-close{
   position: absolute;
+  top: 80%;
   left: 50%;
-  top: 90%;
-  margin-left: -8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #777;
+  font-size: 25px;
+  margin-top: 25px;
+  line-height: 30px;
+  text-align: center;
+  margin-left: -15px;
+
 }
 /* 店铺活动结束 */
 

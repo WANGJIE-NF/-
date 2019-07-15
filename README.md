@@ -29,4 +29,8 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 技术栈
-vue vue-cli3 vue-router express better-scroll  
+vue 
+vue-cli3
+vue-router 
+express 
+better-scroll  
