@@ -1,3 +1,4 @@
+// 店铺图片还需要点击展示;
 <template>
   <div class="seller" ref="seller_scroll">
     <div class="scroll">
