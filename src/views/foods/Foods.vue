@@ -254,8 +254,6 @@ export default {
 .foods-sort-item img{
   width: 16px;
 }
-.foods-sort-item span{
-}
 .food-sort-name{
   font-size: 14px;
   color: #333;

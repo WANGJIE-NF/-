@@ -152,8 +152,7 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-.wrap-scroll ul{
-}
+
 .wrap-scroll ul li{
   display: inline-block;
   padding-left: 5px;
