@@ -1,10 +1,16 @@
 blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, pre, td, textarea, th, ul {
     margin: 0;
     padding: 0;
-}
-body{
+  }
+  body{
     font-family: Tahoma,Arial,"宋体";
     font-size: 12px;
     line-height: 1.5;
     color: #424242;
-}
+  }
+  li{
+    list-style: none;
+  }
+  a{
+    text-decoration: none;
+  }
