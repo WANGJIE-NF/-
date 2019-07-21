@@ -270,6 +270,7 @@ input{
   top: 0;
   width: 100vW;
   height: 100vH;
+  color: #fff;
   z-index: 100;
 }
 .mask{
@@ -281,13 +282,13 @@ input{
 .bulletin-background{
   position:absolute;
   left: 10%;
-  top: 20px;
+  top: 6%;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
   width: 80%;
-  height: 80%;
+  height: 70%;
   padding: 20px 10px;
   border-radius: 10px;
   background-size: 100% 100%;
@@ -313,47 +314,40 @@ input{
   font-size: 12px;
 }
 hr{
-  width: 90%;
+  width: 100%;
   border :none;
   border-bottom: 1px solid black;
 }
 .discount{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  max-width: 100%;
-  text-align: center;
+  position: relative;
+  padding-top: 5px;
 }
 .discount-img{
-  flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  margin-top: 1px;
   border-radius: 2px;
-  margin-right: 5px;
+
 }
 .discount-text{
-  flex: 1 1 auto;
-  font-size: 10px;
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: inline-block;
+  margin-left: 20px;
 }
 .icon-close{
   position: absolute;
-  top: 80%;
+  top: 73%;
   left: 50%;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  border: 2px solid #777;
-  font-size: 25px;
   margin-top: 25px;
+  margin-left: -15px;
+  background-color: #666;
+  border-radius: 50%;
+  font-size: 25px;
   line-height: 30px;
   text-align: center;
-  margin-left: -15px;
-
+  opacity: 0.5;
 }
 /* 店铺活动结束 */
 

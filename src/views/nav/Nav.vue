@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
     <router-link to="./foods">商品</router-link>
-    <router-link to="./evaluate">评价</router-link>
+    <router-link to="./rating">评价 ({{comment_num}})</router-link>
     <router-link to="./seller">卖家信息</router-link>
   </div>
 </template>
@@ -9,6 +9,16 @@
 <script>
 export default {
   // name: 'nav',
+  data(){
+    return {}
+  },
+  props: {
+    comment_num:{
+      type: Number,
+      default: 0
+    },
+      
+  }
 
 }
 </script>
@@ -27,6 +37,7 @@ a{
   line-height: 40px;
   font-size: 14px;
   text-decoration: none;
+  color: #424242;
 }
 .router-link-active{
   color: #fd2

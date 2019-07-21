@@ -1,10 +1,11 @@
 <template>
     <div class="cart-control">
         <transition name='fade'>
-            <span v-if="spus.count" v-on:touchstart='onReduceFoodShopCart' class="icon-remove_circle_outline"></span>
+            <span v-if="spus.count" v-on:touchstart.stop='onReduceFoodShopCart' class="icon-remove_circle_outline"></span>
         </transition>
         <span v-if="spus.count" class="number">{{spus.count}}</span>
-        <span v-on:touchstart='onAddFoodShopCart' class="icon-add_circle" ></span>
+        <span v-else class="number"></span>
+        <span v-on:touchstart.stop='onAddFoodShopCart' class="icon-add_circle" ></span>
     </div>
 </template>
 
@@ -43,32 +44,33 @@ export default {
 <style>
 .cart-control{
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  width: 90px;
 } 
 .number{
   display: inline-block;
   width: 20px;
   font-size: 16px;
-  line-height: 20px;
+  line-height: 30px;
   text-align: center;
 }
 .icon-remove_circle_outline{
-  font-size: 20px;
+  font-size: 30px;
   color: #b4b4b4;
 } 
 .icon-add_circle{
   position: relative;
-  font-size: 20px;
-  color: #f1d32d
+  font-size: 30px;
+  color: #f1d32d;
 }
 .icon-add_circle::after{
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 5px;
+  left: 5px;
   content: '';
   display: inline-block;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: black;
   z-index: -1;
@@ -81,6 +83,6 @@ export default {
     transform: translateX(10px);
 }
 .fade-leave-to{
-    transform: translateX(20px);
+    transform: translateX(50px);
 }
 </style>

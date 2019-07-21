@@ -5,7 +5,7 @@
                 <div class="top" v-if="poiInfo.discounts2">{{poiInfo.discounts2[0].info}}</div>
                 <div class="header">
                     <img src="./img/ash_bin.png" alt="">
-                    <span v-on:click="onClearShopCartList">清空购物车</span>
+                    <span v-on:touchstart="onClearShopCartList">清空购物车</span>
                 </div>
                 <div class="content" ref="content">
                     <ul>
@@ -25,7 +25,7 @@
             </div>
         </transition>
 
-        <div class="summary" v-on:click="onShowShopCartList">
+        <div class="summary" v-on:touchstart="onShowShopCartList">
             <div class="left">
             <div class="logo-wrap" :class='{colorYellow:totalCount}'>
                 <span class="icon-shopping_cart"></span>
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="mask" v-if="showCartList" v-on:click="show_shop_cart_list=false"></div>
+        <div class="mask" v-if="showCartList" v-on:touchstart="show_shop_cart_list=false"></div>
     </div>
 </template>
 
@@ -168,6 +168,7 @@ export default {
     bottom: 0;
     width: 100%;
     height: 51px;
+    z-index: 100;
 }
 
 .fade-enter,

@@ -1,7 +1,7 @@
 <template>
   <div class="star">
     <span v-for="(itemClass,index) in itemClasss" class="star-item" :class="itemClass" :key="index"></span>
-    <span class="scoreText">{{this.score}}</span>
+    <span class="scoreText" v-if=showScore>{{this.score}}</span>
   </div>
 </template>
 
@@ -17,7 +17,12 @@ export default {
     score: {
       type: Number,
       default: ''
+    },
+    showScore: {
+      type: Boolean,
+      default: true,
     }
+
   },
   computed: {
     itemClasss(){
@@ -44,6 +49,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.star{
+  display: inline-block;
+}
 .star-item{
   display: inline-block;
   width: 15px;
@@ -63,5 +71,6 @@ export default {
 .scoreText{
   margin-left: 3px;
   font-size: 12px;
+  vertical-align: 2px;
 }
 </style>

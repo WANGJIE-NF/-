@@ -6,12 +6,12 @@
         <ul>
 
           <!-- 专场 -->
-          <li class='foods-sort-item foods-sort-hook' :class="{active:nowIndex==0}" v-on:touchstart="onFoodsSortItem(0)">
+          <li class='foods-sort-item foods-sort-hook' :class="{active:nowIndex==0}" v-on:click="onFoodsSortItem(0)">
             <img v-if="container.tag_icon" :src="container.tag_icon">
             <span>{{container.tag_name}}</span>
           </li>
 
-          <li class="foods-sort-item foods-sort-hook" :class="{active:nowIndex==index+1}" v-on:touchstart="onFoodsSortItem(index+1)" v-for='(food,index) in foods' :key="index" >
+          <li class="foods-sort-item foods-sort-hook" :class="{active:nowIndex==index+1}" v-on:click="onFoodsSortItem(index+1)" v-for='(food,index) in foods' :key="index" >
             <img v-if="food.icon" :src="food.icon">
             <span class="food-sort-name">{{food.name}}</span>
             <span  class="shop-cart-tip" v-if="computedCount(food.spus)">{{computedCount(food.spus)}}</span>
@@ -37,7 +37,7 @@
                 <span class="food-name-icon"></span>
                 <span>{{food.name}}</span>
                 </h3>
-              <div class="spus" v-for="(spus,ind) in food.spus" :key="ind" v-on:click="onShowSpus(spus)">
+              <div class="spus"  v-for="(spus,ind) in food.spus" :key="ind" v-on:click="onShowSpus(spus)">
                 <img class="spus-pic" :src="spus.picture" alt="">
                 <div class="spus-text">
                   <h2 class="spus-name">{{spus.name}}</h2>
@@ -66,7 +66,7 @@
     <ShopCart :poiInfo="poiInfo" :foods='foods' ></ShopCart>
 
     <!-- 商品详情 -->
-    <PrdductDetail :spus="spus"></PrdductDetail>
+    <PrdductDetail :spus="spus" ref="spus"></PrdductDetail>
   </div>
 </template>
 
@@ -115,7 +115,7 @@ export default {
 
     // 初始化函数 设置滚动对象
     initScroll(){
-      this.sortScroll = new Bscroll(this.$refs.foodsSort, {probeType: 3})
+      this.sortScroll = new Bscroll(this.$refs.foodsSort, {probeType: 3, click: true})
       this.listScroll = new Bscroll(this.$refs.foodsList, {probeType: 3, click: true})
     },
     
@@ -125,6 +125,7 @@ export default {
       this.nowIndex = index;
       let ele = this.$refs.foodsList.getElementsByClassName('foods-list-hook')[index]
       this.listScroll.scrollToElement(ele, 500);
+      console.log(3)
     },
 
     // 根据下标与左侧对应
@@ -155,6 +156,7 @@ export default {
     onShowSpus(spus){
       console.log(spus.name)
       this.spus = spus;
+      this.$refs.spus.onShowSpus();
 
     },
 
@@ -251,6 +253,8 @@ export default {
 }
 .foods-sort-item img{
   width: 16px;
+}
+.foods-sort-item span{
 }
 .food-sort-name{
   font-size: 14px;

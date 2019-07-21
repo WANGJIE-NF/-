@@ -5,7 +5,7 @@
     <app-header :poiInfo='poiInfo'></app-header>
 
     <!-- 导航 -->
-    <Nav></Nav>
+    <Nav :comment_num="comment_num"></Nav>
 
     <!-- 内容 -->
     <Contemt></Contemt>
@@ -23,6 +23,7 @@ import Contemt from './views/contemt/Contemt';
     data() {
       return {
         poiInfo: {},
+        comment_num: 0,
       };
     },
     components: {
@@ -31,7 +32,7 @@ import Contemt from './views/contemt/Contemt';
       Contemt
     },
     methods: {
-      fetchpoiInfo(){
+      fetchPoiInfo(){
         fetch('/api/goods')
           .then(resp => {
             return resp.json();
@@ -42,10 +43,23 @@ import Contemt from './views/contemt/Contemt';
           .catch(err => {
             console.log('出错了' + err)
           })
+      },
+      fetchCommentNum(){
+        fetch('/api/ratings')
+          .then(resp => {
+            return resp.json();
+          })
+          .then(res => {
+            this.comment_num = res.data.comment_num;
+          })
+          .catch(err => {
+            console.log('出错了' + err)
+          })
       }
     },
     created(){
-      this.fetchpoiInfo();
+      this.fetchPoiInfo();
+      this.fetchCommentNum();
     }
   }
 </script>
