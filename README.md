@@ -35,5 +35,5 @@ vue-router
 express 
 better-scroll  
 
-### 博客
-https://www.cnblogs.com/wangjie-nf/
+
+
